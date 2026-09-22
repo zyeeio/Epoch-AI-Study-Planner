@@ -1,0 +1,8 @@
+{
+  "name": "Study Planner & Academic AI Assistant",
+  "description": "Flexible daily study app with task & routine tracking, smart timetable generator, reminders, and Google AI for lecture notes and academic research.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

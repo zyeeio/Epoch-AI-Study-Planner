@@ -1,0 +1,118 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User profile with personal academic preferences and settings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "lastActiveAt": { "type": "string" }
+      },
+      "required": ["id", "email"]
+    },
+    "task": {
+      "title": "Task",
+      "description": "User academic study task or assignment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 300 },
+        "subject": { "type": "string", "maxLength": 100 },
+        "category": { "type": "string", "maxLength": 50 },
+        "priority": { "type": "string", "enum": ["urgent", "high", "medium", "low"] },
+        "estimatedMinutes": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "dueTime": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "completedAt": { "type": "string" },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "reminderEnabled": { "type": "boolean" },
+        "tags": { "type": "array" }
+      },
+      "required": ["id", "userId", "title", "subject", "priority", "completed"]
+    },
+    "routine": {
+      "title": "Routine",
+      "description": "Daily habit or routine block",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 200 },
+        "timeOfDay": { "type": "string", "enum": ["morning", "afternoon", "evening", "night"] },
+        "scheduledTime": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "daysOfWeek": { "type": "array" },
+        "streak": { "type": "number" },
+        "lastCompletedDate": { "type": "string" },
+        "reminderEnabled": { "type": "boolean" },
+        "category": { "type": "string" },
+        "iconName": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "scheduledTime", "durationMinutes"]
+    },
+    "timetableBlock": {
+      "title": "TimetableBlock",
+      "description": "A scheduled block on the user's weekly timetable",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "dayOfWeek": { "type": "number" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "title": { "type": "string", "maxLength": 200 },
+        "subject": { "type": "string", "maxLength": 100 },
+        "type": { "type": "string" },
+        "status": { "type": "string" },
+        "isFlexible": { "type": "boolean" },
+        "completed": { "type": "boolean" },
+        "color": { "type": "string" }
+      },
+      "required": ["id", "userId", "dayOfWeek", "startTime", "endTime", "title"]
+    },
+    "lectureNote": {
+      "title": "LectureNote",
+      "description": "Student lecture notes and AI synthesized summaries",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 300 },
+        "subject": { "type": "string", "maxLength": 100 },
+        "date": { "type": "string" },
+        "rawContent": { "type": "string", "maxLength": 50000 },
+        "summary": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "subject", "rawContent"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "Stores user profile and credentials info"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "task",
+      "description": "Stores private user study tasks"
+    },
+    "/users/{userId}/routines/{routineId}": {
+      "schema": "routine",
+      "description": "Stores private user study routines"
+    },
+    "/users/{userId}/timetable/{blockId}": {
+      "schema": "timetableBlock",
+      "description": "Stores private user scheduled blocks"
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": "lectureNote",
+      "description": "Stores user lecture notes and summaries"
+    }
+  }
+}
